@@ -1,0 +1,488 @@
+
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Quiz: Komendy Windows i Linux</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f9f9f9;
+      margin: 0;
+      padding: 0;
+    }
+    .quiz-container {
+      max-width: 700px;
+      margin: 40px auto;
+      background: white;
+      padding: 30px;
+      border-radius: 16px;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+    }
+    h1 {
+      text-align: center;
+      margin-bottom: 30px;
+    }
+    h2 {
+      font-size: 1.2rem;
+      margin-bottom: 10px;
+    }
+    .question {
+      margin-bottom: 30px;
+    }
+    .answers label {
+      display: block;
+      margin-bottom: 5px;
+      cursor: pointer;
+    }
+    .result {
+      margin-top: 20px;
+      font-weight: bold;
+      text-align: center;
+    }
+    .btn {
+      padding: 10px 20px;
+      margin: 5px;
+      background: #007bff;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      font-size: 1rem;
+    }
+    .btn:hover {
+      background: #0056b3;
+    }
+    .hint {
+      font-size: 0.95rem;
+      margin-top: 5px;
+      display: none;
+    }
+    .correct {
+      color: green;
+    }
+    .incorrect {
+      color: red;
+    }
+  </style>
+</head>
+<body>
+  <div class="quiz-container">
+    <h1>Quiz: Komendy w systemach operacyjnych</h1>
+    <form id="quizForm"></form>
+    <div style="text-align: center;">
+      <button class="btn" type="button" onclick="checkAnswers()">Sprawdź odpowiedzi</button>
+      <button class="btn" type="button" onclick="resetQuiz()">Resetuj quiz</button>
+    </div>
+    <div class="result" id="result"></div>
+  </div>
+
+  <script>
+    const questions = [
+  {
+    "question": "Jak utworzyć folder w systemie Linux?",
+    "answers": [
+      "mkdir nowy_folder",
+      "cd nowy_folder",
+      "ls nowy_folder",
+      "touch nowy_folder"
+    ],
+    "correct": 0,
+    "hints": [
+      "",
+      "cd nie jest poprawną komendą. mkdir to skrót od 'make directory'.",
+      "ls nie jest poprawną komendą. mkdir to skrót od 'make directory'.",
+      "touch nie jest poprawną komendą. mkdir to skrót od 'make directory'."
+    ]
+  },
+  {
+    "question": "Jak usunąć folder i jego zawartość w systemie Linux?",
+    "answers": [
+      "rm folder",
+      "rm -r folder",
+      "del folder",
+      "erase folder"
+    ],
+    "correct": 1,
+    "hints": [
+      "rm nie jest poprawną komendą. rm -r oznacza 'usuń rekurencyjnie'.",
+      "",
+      "del nie jest poprawną komendą. rm -r oznacza 'usuń rekurencyjnie'.",
+      "erase nie jest poprawną komendą. rm -r oznacza 'usuń rekurencyjnie'."
+    ]
+  },
+  {
+    "question": "Jak utworzyć nowy folder w systemie Windows za pomocą CLI?",
+    "answers": [
+      "mkdir nowy",
+      "touch nowy",
+      "create folder",
+      "ls nowy"
+    ],
+    "correct": 0,
+    "hints": [
+      "",
+      "touch nie jest poprawną komendą. mkdir działa zarówno w PowerShell, jak i cmd.",
+      "create nie jest poprawną komendą. mkdir działa zarówno w PowerShell, jak i cmd.",
+      "ls nie jest poprawną komendą. mkdir działa zarówno w PowerShell, jak i cmd."
+    ]
+  },
+  {
+    "question": "Jak usunąć folder w Windows CLI wraz z całą zawartością?",
+    "answers": [
+      "rmdir /S /Q folder",
+      "del folder",
+      "rm folder",
+      "remove folder"
+    ],
+    "correct": 0,
+    "hints": [
+      "",
+      "del nie jest poprawną komendą. Użyj opcji /S i /Q do usuwania z zawartością i bez potwierdzeń.",
+      "rm nie jest poprawną komendą. Użyj opcji /S i /Q do usuwania z zawartością i bez potwierdzeń.",
+      "remove nie jest poprawną komendą. Użyj opcji /S i /Q do usuwania z zawartością i bez potwierdzeń."
+    ]
+  },
+  {
+    "question": "Jak wyświetlić pliki w systemie Linux?",
+    "answers": [
+      "ls",
+      "dir",
+      "show",
+      "list"
+    ],
+    "correct": 0,
+    "hints": [
+      "",
+      "dir nie jest poprawną komendą. ls to standardowa komenda w bashu.",
+      "show nie jest poprawną komendą. ls to standardowa komenda w bashu.",
+      "list nie jest poprawną komendą. ls to standardowa komenda w bashu."
+    ]
+  },
+  {
+    "question": "Jak zmienić katalog w Linuxie?",
+    "answers": [
+      "mv folder",
+      "cd folder",
+      "goto folder",
+      "open folder"
+    ],
+    "correct": 1,
+    "hints": [
+      "mv nie jest poprawną komendą. cd to 'change directory'.",
+      "",
+      "goto nie jest poprawną komendą. cd to 'change directory'.",
+      "open nie jest poprawną komendą. cd to 'change directory'."
+    ]
+  },
+  {
+    "question": "Jak znaleźć plik w systemie Linux?",
+    "answers": [
+      "search plik.txt",
+      "find . -name 'plik.txt'",
+      "grep plik.txt",
+      "ls plik.txt"
+    ],
+    "correct": 1,
+    "hints": [
+      "search nie jest poprawną komendą. find to podstawowa komenda do przeszukiwania systemu plików.",
+      "",
+      "grep nie jest poprawną komendą. find to podstawowa komenda do przeszukiwania systemu plików.",
+      "ls nie jest poprawną komendą. find to podstawowa komenda do przeszukiwania systemu plików."
+    ]
+  },
+  {
+    "question": "Jak szukać pliku w Windows CLI?",
+    "answers": [
+      "find plik.txt",
+      "dir /S /B plik.txt",
+      "grep plik.txt",
+      "search plik.txt"
+    ],
+    "correct": 1,
+    "hints": [
+      "find nie jest poprawną komendą. dir /S /B szuka rekursywnie w strukturze katalogów.",
+      "",
+      "grep nie jest poprawną komendą. dir /S /B szuka rekursywnie w strukturze katalogów.",
+      "search nie jest poprawną komendą. dir /S /B szuka rekursywnie w strukturze katalogów."
+    ]
+  },
+  {
+    "question": "Jak wyświetlić zawartość pliku w Linuxie?",
+    "answers": [
+      "cat plik.txt",
+      "echo plik.txt",
+      "ls plik.txt",
+      "read plik.txt"
+    ],
+    "correct": 0,
+    "hints": [
+      "",
+      "echo nie jest poprawną komendą. cat wyświetla zawartość pliku tekstowego w terminalu.",
+      "ls nie jest poprawną komendą. cat wyświetla zawartość pliku tekstowego w terminalu.",
+      "read nie jest poprawną komendą. cat wyświetla zawartość pliku tekstowego w terminalu."
+    ]
+  },
+  {
+    "question": "Jak dopisać tekst do pliku w PowerShell?",
+    "answers": [
+      "echo tekst > plik.txt",
+      "echo tekst >> plik.txt",
+      "type tekst > plik.txt",
+      "add tekst > plik.txt"
+    ],
+    "correct": 1,
+    "hints": [
+      "echo nie jest poprawną komendą. >> dopisuje do pliku, a > nadpisuje.",
+      "",
+      "type nie jest poprawną komendą. >> dopisuje do pliku, a > nadpisuje.",
+      "add nie jest poprawną komendą. >> dopisuje do pliku, a > nadpisuje."
+    ]
+  },
+  {
+    "question": "Jak edytować plik tekstowy w Linuxie z terminala?",
+    "answers": [
+      "nano plik.txt",
+      "touch plik.txt",
+      "cat plik.txt",
+      "vim > plik.txt"
+    ],
+    "correct": 0,
+    "hints": [
+      "",
+      "touch nie jest poprawną komendą. nano to prosty edytor terminalowy.",
+      "cat nie jest poprawną komendą. nano to prosty edytor terminalowy.",
+      "vim nie jest poprawną komendą. nano to prosty edytor terminalowy."
+    ]
+  },
+  {
+    "question": "Jak zmienić nazwę pliku w systemie Linux?",
+    "answers": [
+      "rename file.txt new.txt",
+      "mv file.txt new.txt",
+      "edit file.txt new.txt",
+      "switch file.txt new.txt"
+    ],
+    "correct": 1,
+    "hints": [
+      "rename nie jest poprawną komendą. mv służy do przenoszenia i zmiany nazw.",
+      "",
+      "edit nie jest poprawną komendą. mv służy do przenoszenia i zmiany nazw.",
+      "switch nie jest poprawną komendą. mv służy do przenoszenia i zmiany nazw."
+    ]
+  },
+  {
+    "question": "Jak utworzyć nowy plik tekstowy w systemie Linux?",
+    "answers": [
+      "touch nowy.txt",
+      "cat > nowy.txt",
+      "nano nowy.txt",
+      "vim nowy.txt"
+    ],
+    "correct": 0,
+    "hints": [
+      "",
+      "cat nie jest poprawną komendą. touch tworzy pusty plik bez jego otwierania.",
+      "nano nie jest poprawną komendą. touch tworzy pusty plik bez jego otwierania.",
+      "vim nie jest poprawną komendą. touch tworzy pusty plik bez jego otwierania."
+    ]
+  },
+  {
+    "question": "Jak otworzyć plik tekstowy w Notatniku z poziomu GUI Windows?",
+    "answers": [
+      "PPM → Otwórz za pomocą → Notatnik",
+      "Enter → Edytuj",
+      "Kliknij dwukrotnie → Dodaj tekst",
+      "PPM → Nowy → Notatnik"
+    ],
+    "correct": 0,
+    "hints": [
+      "",
+      "Enter nie jest poprawną komendą. Notatnik to domyślny edytor tekstu w Windows.",
+      "Kliknij nie jest poprawną komendą. Notatnik to domyślny edytor tekstu w Windows.",
+      "PPM nie jest poprawną komendą. Notatnik to domyślny edytor tekstu w Windows."
+    ]
+  },
+  {
+    "question": "Jak połączyć dwa pliki tekstowe w Linuxie?",
+    "answers": [
+      "cat plik1.txt plik2.txt > wynik.txt",
+      "join plik1.txt plik2.txt",
+      "merge plik1.txt plik2.txt",
+      "copy plik1.txt plik2.txt > wynik.txt"
+    ],
+    "correct": 0,
+    "hints": [
+      "",
+      "join nie jest poprawną komendą. cat może połączyć zawartość i przekierować do nowego pliku.",
+      "merge nie jest poprawną komendą. cat może połączyć zawartość i przekierować do nowego pliku.",
+      "copy nie jest poprawną komendą. cat może połączyć zawartość i przekierować do nowego pliku."
+    ]
+  },
+  {
+    "question": "Jak przejść do katalogu nadrzędnego w Linuxie?",
+    "answers": [
+      "cd ..",
+      "cd /",
+      "cd ~",
+      "cd -"
+    ],
+    "correct": 0,
+    "hints": [
+      "",
+      "cd nie jest poprawną komendą. cd .. Przenosi o jeden poziom wyżej.",
+      "cd nie jest poprawną komendą. cd .. Przenosi o jeden poziom wyżej.",
+      "cd nie jest poprawną komendą. cd .. Przenosi o jeden poziom wyżej."
+    ]
+  },
+  {
+    "question": "Jak utworzyć plik z tekstem w Windows CLI, nadpisując zawartość?",
+    "answers": [
+      "echo tekst > plik.txt",
+      "echo tekst >> plik.txt",
+      "type tekst > plik.txt",
+      "write tekst > plik.txt"
+    ],
+    "correct": 0,
+    "hints": [
+      "",
+      "echo nie jest poprawną komendą. Pojedynczy > nadpisuje plik.",
+      "type nie jest poprawną komendą. Pojedynczy > nadpisuje plik.",
+      "write nie jest poprawną komendą. Pojedynczy > nadpisuje plik."
+    ]
+  },
+  {
+    "question": "Jak utworzyć pusty plik tekstowy w Windows CLI?",
+    "answers": [
+      "echo. > plik.txt",
+      "type nul > plik.txt",
+      "notepad plik.txt",
+      "new-file plik.txt"
+    ],
+    "correct": 0,
+    "hints": [
+      "",
+      "type nie jest poprawną komendą. echo. > tworzy pusty plik tekstowy w cmd.",
+      "notepad nie jest poprawną komendą. echo. > tworzy pusty plik tekstowy w cmd.",
+      "new-file nie jest poprawną komendą. echo. > tworzy pusty plik tekstowy w cmd."
+    ]
+  },
+  {
+    "question": "Jak wyszukać folder o nazwie 'backup' w systemie Linux?",
+    "answers": [
+      "find . -type d -name 'backup'",
+      "find / -name 'backup'",
+      "grep 'backup'",
+      "dir backup"
+    ],
+    "correct": 0,
+    "hints": [
+      "",
+      "find nie jest poprawną komendą. find . -type d -name 'backup' szuka tylko folderów.",
+      "grep nie jest poprawną komendą. find . -type d -name 'backup' szuka tylko folderów.",
+      "dir nie jest poprawną komendą. find . -type d -name 'backup' szuka tylko folderów."
+    ]
+  },
+  {
+    "question": "Jak połączyć dwa pliki w Windows CLI?",
+    "answers": [
+      "type plik1.txt plik2.txt > wynik.txt",
+      "copy plik1.txt+plik2.txt wynik.txt",
+      "merge plik1.txt plik2.txt",
+      "join plik1.txt plik2.txt"
+    ],
+    "correct": 0,
+    "hints": [
+      "",
+      "copy nie jest poprawną komendą. type może łączyć zawartość plików tekstowych.",
+      "merge nie jest poprawną komendą. type może łączyć zawartość plików tekstowych.",
+      "join nie jest poprawną komendą. type może łączyć zawartość plików tekstowych."
+    ]
+  },
+  {
+    "question": "Jak wyszukać słowo wewnątrz pliku w Linuxie?",
+    "answers": [
+      "grep 'szukane' plik.txt",
+      "find 'szukane' plik.txt",
+      "cat 'szukane' plik.txt",
+      "search 'szukane' plik.txt"
+    ],
+    "correct": 0,
+    "hints": [
+      "",
+      "find nie jest poprawną komendą. grep służy do przeszukiwania zawartości plików.",
+      "cat nie jest poprawną komendą. grep służy do przeszukiwania zawartości plików.",
+      "search nie jest poprawną komendą. grep służy do przeszukiwania zawartości plików."
+    ]
+  }
+];
+
+    let currentQuestions = [];
+
+    function renderQuiz() {
+      const form = document.getElementById("quizForm");
+      form.innerHTML = "";
+      currentQuestions = questions.sort(() => Math.random() - 0.5).slice(0, 5);
+      currentQuestions.forEach((q, i) => {
+        const qDiv = document.createElement("div");
+        qDiv.className = "question";
+        qDiv.innerHTML = `<h2>${i + 1}. ${q.question}</h2>`;
+
+        const ansDiv = document.createElement("div");
+        ansDiv.className = "answers";
+        q.answers.forEach((ans, j) => {
+          ansDiv.innerHTML += `
+            <label><input type="radio" name="q${i}" value="${j}" /> ${ans}</label>
+          `;
+        });
+
+        const hint = document.createElement("div");
+        hint.className = "hint";
+        hint.id = `hint${i}`;
+        qDiv.appendChild(ansDiv);
+        qDiv.appendChild(hint);
+        form.appendChild(qDiv);
+      });
+    }
+
+    function checkAnswers() {
+      let score = 0;
+      currentQuestions.forEach((q, i) => {
+        const selected = document.querySelector(`input[name=q${i}]:checked`);
+        const hint = document.getElementById(`hint${i}`);
+        const selectedVal = selected ? parseInt(selected.value) : null;
+
+        if (selectedVal === q.correct) {
+          hint.textContent = "✅ Dobrze!";
+          hint.className = "hint correct";
+          hint.style.display = "block";
+          score++;
+        } else {
+          hint.textContent = `❌ Źle. ${q.hints[selectedVal]}`;
+          hint.className = "hint incorrect";
+          hint.style.display = "block";
+        }
+      });
+
+      const percent = Math.round((score / currentQuestions.length) * 100);
+      const previousBest = localStorage.getItem("bestScore") || 0;
+      if (percent > previousBest) {
+        localStorage.setItem("bestScore", percent);
+      }
+      const bestScore = localStorage.getItem("bestScore") || percent;
+      const resultText = percent >= 80
+        ? `Brawo! Zaliczyłeś quiz: ${score}/${currentQuestions.length} (${percent}%)`
+        : `Wynik: ${score}/${currentQuestions.length} (${percent}%) — Musisz mieć min. 80%, spróbuj ponownie.`;
+      document.getElementById("result").innerText = resultText + " Twój najlepszy wynik: " + bestScore + "%";
+    }
+
+    function resetQuiz() {
+      document.getElementById("result").innerText = "";
+      renderQuiz();
+    }
+
+    document.addEventListener("DOMContentLoaded", renderQuiz);
+  </script>
+</body>
+</html>
