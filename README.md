@@ -1,63 +1,61 @@
-# Quiz4IT – CLI Quiz for Google IT Support
+# 📚 quiz4it – Interaktywna platforma quizów IT
 
-🎯 A simple interactive quiz to help IT Support learners practice basic CLI commands in Windows and Linux.  
-This quiz is inspired by the *Google IT Support Professional Certificate* – specifically the course:  
-**Operating Systems and You: Becoming a Power User**
+🎯 **quiz4it** to edukacyjna platforma z interaktywnymi quizami opartymi na kursach certyfikacyjnych Google (IT Support, Cybersecurity i inne). Pomaga szybciej przyswajać wiedzę i skuteczniej się uczyć – quiz po quizie.
 
----
-
-## ✨ Features
-
-- ✅ 5 randomized questions each time
-- ✅ Covers basic CLI commands (Windows CMD + Linux Bash)
-- ✅ Instant feedback with explanations (hints)
-- ✅ Clean, mobile-friendly UI
-- ✅ Local scoring and best score tracking
-- ✅ Built as a lightweight MVP (Minimum Viable Product)
+👉 [quiz4it.pl](https://quiz4it.pl)
 
 ---
 
-## 🧪 Tech Stack
+## ✨ Co oferuje platforma?
 
-- HTML5
-- CSS3 (inlined for simplicity)
-- JavaScript (Vanilla JS, no frameworks)
-
----
-
-## 🧠 Educational context
-
-This project is part of a personal learning journey while completing the Google IT Support Certificate.
-
-The goal:  
-To turn key learnings into practical, interactive tools for:
-- **Revision and memorization**
-- **Sharing knowledge with others**
-- **Building portfolio projects publicly**
+- ✅ Quizy do najważniejszych modułów z kursów IT
+- 📬 Newsletter (Sendy + AWS SES) z nowościami i materiałami
+- 🧭 Roadmapa rozwoju projektu (kolejne quizy, ranking, punkty)
+- 🌐 Lekki landing page oparty o Carrd (mobilny i szybki)
+- 🚀 Otwarte repozytorium – #buildinpublic
 
 ---
 
-## 🚀 Usage
+## 🧪 Technologia (stack MVP)
 
-You can run this quiz locally or deploy it anywhere (Netlify, GitHub Pages, etc.)
+| Obszar            | Narzędzie                             |
+|-------------------|----------------------------------------|
+| Landing Page      | [Carrd](https://carrd.co)             |
+| Quizy             | HTML + CSS + JS (Vanilla)             |
+| Hosting quizów    | Netlify                               |
+| Formularze        | Carrd + Sendy                         |
+| Email backend     | AWS SES                               |
+| Repo + publikacja | GitHub Pages / Netlify                |
 
-### 🖥 Local use
+---
+
+## 📌 Roadmapa (maj 2025)
+
+- ✅ CLI quiz (Windows & Linux) – gotowe
+- 🚧 Networking, Security – w przygotowaniu
+- 🔜 Ranking, punkty, logowanie
+- 🔜 Baza quizów z innych kursów Google (Cybersecurity, Data Analytics)
+- 🔜 Wersja angielska
+- 🔜 API do integracji
+
+---
+
+## 🎮 Moduł: CLI Quiz (MVP)
+
+Quiz z podstawowych komend terminalowych dla systemów:
+- 🖥 Windows CMD
+- 🐧 Linux Bash
+
+Quiz składa się z:
+- 🔄 5 losowych pytań z bazy
+- ✅ natychmiastowej informacji zwrotnej
+- 📈 lokalnego zapisu wyniku (best score)
+
+---
+
+## 🔧 Uruchomienie lokalne
 
 ```bash
-cd quiz4it_repo
+git clone https://github.com/mateuszillg/quiz4it.git
+cd quiz4it_repo_for_git
 python3 -m http.server
-# Visit http://localhost:8000
-```
-
----
-
-## 📌 License
-
-MIT – free to use, modify and contribute!
-
----
-
-## 🙌 Author
-
-Developed with focus, learning, and a few coffee breaks ☕  
-by Mateusz Illg
